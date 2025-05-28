@@ -15,7 +15,9 @@
 cmake_minimum_required(VERSION 3.25)
 project(logc LANGUAGES C)
 
-set(CMAKE_C_FLAGS "-Wall -Wextra")
+if(PROJECT_NAME STREQUAL CMAKE_PROJECT_NAME)
+    set(CMAKE_C_FLAGS "-Wall -Wextra")
+endif()
 set(CMAKE_C_STANDARD 23)
 
 add_library(
