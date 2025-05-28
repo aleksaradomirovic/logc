@@ -29,7 +29,7 @@ extern "C" {
 #endif
 
 typedef struct logger * logger_t;
-typedef unsigned int log_level_t;
+typedef int log_level_t;
 
 #define LOG_LEVEL_NONE    0x0f
 #define LOG_LEVEL_FATAL   0x20
@@ -39,6 +39,9 @@ typedef unsigned int log_level_t;
 #define LOG_LEVEL_VERBOSE 0x41
 #define LOG_LEVEL_DEBUG   0x50
 #define LOG_LEVEL_TRACE   0x51
+#define LOG_LEVEL_DEFAULT LOG_LEVEL_INFO
+
+#define LOG_FLAG_OVERRIDE_ENV_LEVEL (1 << 0)
 
 logger_t log_create(log_level_t level, FILE *_Nullable output, unsigned int flags);
 int log_destroy(logger_t);
@@ -54,6 +57,10 @@ int log_set_output(logger_t, FILE *_Nullable output);
 int log_is_tty(logger_t);
 
 int log_write_f(logger_t, log_level_t level, const char *fmt, ...);
+
+#define LOG_LEVEL_ENV_KEY "LOG_LEVEL"
+
+extern logger_t stdlog;
 
 #ifdef __cplusplus
 }

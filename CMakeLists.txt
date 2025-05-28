@@ -21,6 +21,8 @@ set(CMAKE_C_STANDARD 23)
 add_library(
     logc
         src/logger.c
+        src/logger.h
+        src/stdlog.c
         src/write.c
 )
 target_include_directories(

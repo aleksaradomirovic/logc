@@ -27,3 +27,5 @@ struct logger {
     FILE *output;
     pthread_mutex_t write_lock;
 };
+
+extern log_level_t env_log_level;

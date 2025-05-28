@@ -83,7 +83,14 @@ static int locked_log_write_f(logger_t logger, int tty, log_level_t level, const
 }
 
 int log_write_f(logger_t logger, log_level_t level, const char *fmt, ...) {
-    if(level > logger->level) {
+    log_level_t max_level;
+    if((logger->flags & LOG_FLAG_OVERRIDE_ENV_LEVEL) || env_log_level < 0) {
+        max_level = logger->level;
+    } else {
+        max_level = env_log_level;
+    }
+
+    if(level > max_level) {
         return 0;
     }
 
