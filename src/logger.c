@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int log_set_level(logger_t logger, log_level_t level) {
+log_level_t log_set_level(logger_t logger, log_level_t level) {
     if(level == 0) {
         level = LOG_LEVEL_INFO;
     }

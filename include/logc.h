@@ -50,7 +50,7 @@ int log_destroy(logger_t);
 unsigned int log_set_flags(logger_t, unsigned int flags);
 unsigned int log_get_flags(logger_t);
 
-int log_set_level(logger_t, log_level_t level);
+log_level_t log_set_level(logger_t, log_level_t level);
 log_level_t log_get_level(logger_t);
 
 int log_set_output(logger_t, FILE *_Nullable output);
