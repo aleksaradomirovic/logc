@@ -87,7 +87,7 @@ int lprintf(logger_t logger, log_level_t level, const char *fmt, ...) {
     if((logger->flags & LOG_FLAG_OVERRIDE_ENV_LEVEL) || env_log_level < 0) {
         max_level = logger->level;
     } else {
-        max_level = env_log_level;
+        max_level = (env_log_level >= logger->level) ? env_log_level : logger->level;
     }
 
     if(level > max_level) {
