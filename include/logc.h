@@ -19,6 +19,7 @@
 
 
 #include <stdio.h>
+#include <string.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -56,7 +57,7 @@ int log_set_output(logger_t, FILE *_Nullable output);
 
 int log_is_tty(logger_t);
 
-int log_write_f(logger_t, log_level_t level, const char *fmt, ...);
+int lprintf(logger_t, log_level_t level, const char *fmt, ...);
 
 #define LOG_LEVEL_ENV_KEY "LOG_LEVEL"
 

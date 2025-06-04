@@ -15,9 +15,18 @@
 cmake_minimum_required(VERSION 3.25)
 project(logc LANGUAGES C)
 
-if(PROJECT_NAME STREQUAL CMAKE_PROJECT_NAME)
-    set(CMAKE_C_FLAGS "-Wall -Wextra")
-endif()
+include(FetchContent)
+
+FetchContent_Declare(
+    EasyConfig
+    GIT_REPOSITORY https://github.com/aleksaradomirovic/easyconfig.git
+    GIT_TAG        master
+    OVERRIDE_FIND_PACKAGE
+)
+find_package(EasyConfig)
+auto_configure_project()
+
+set(CMAKE_C_FLAGS "-Wall -Wextra")
 set(CMAKE_C_STANDARD 23)
 
 add_library(
