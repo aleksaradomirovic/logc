@@ -90,6 +90,7 @@ int log_set_output(logger_t logger, FILE *arg_file) {
 }
 
 unsigned int log_set_flags(logger_t logger, unsigned int flags) {
+    flags &= (LOG_FLAG_OVERRIDE_ENV_LEVEL);
     logger->flags = flags;
     return flags;
 }

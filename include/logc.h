@@ -18,6 +18,7 @@
 #define _LOGC_H
 
 
+#include <errno.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -28,6 +29,8 @@ extern "C" {
 #ifndef _Nullable
 #define _Nullable
 #endif
+
+#define strerrno strerror(errno)
 
 typedef struct logger * logger_t;
 typedef int log_level_t;
