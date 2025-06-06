@@ -21,9 +21,9 @@ FetchContent_Declare(
     EasyConfig
     GIT_REPOSITORY https://github.com/aleksaradomirovic/easyconfig.git
     GIT_TAG        master
-    OVERRIDE_FIND_PACKAGE
+    GIT_SHALLOW    ON
 )
-find_package(EasyConfig)
+FetchContent_MakeAvailable(EasyConfig)
 auto_configure_project()
 
 set(CMAKE_C_FLAGS "-Wall -Wextra")
