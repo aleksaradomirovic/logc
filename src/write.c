@@ -83,6 +83,11 @@ static int locked_log_write_f(logger_t logger, int tty, log_level_t level, const
 }
 
 int lprintf(logger_t logger, log_level_t level, const char *fmt, ...) {
+    if(logger == NULL) {
+        errno = EFAULT;
+        return -1;
+    }
+
     log_level_t max_level;
     if((logger->flags & LOG_FLAG_OVERRIDE_ENV_LEVEL) || env_log_level < 0) {
         max_level = logger->level;
