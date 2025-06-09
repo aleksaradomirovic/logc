@@ -19,11 +19,7 @@
 #include <errno.h>
 #include <stdckdint.h>
 
-#ifdef _WIN32
-#   define LINE_SEP "\r\n"
-#else
-#   define LINE_SEP "\n"
-#endif
+#define LINE_SEP "\n"
 
 static int check_should_print(logger_t logger, log_level_t level) {
     unsigned int log_level = get_system_log_level();
