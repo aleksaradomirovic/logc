@@ -29,9 +29,6 @@ set(CMAKE_C_FLAGS "-Wall -Wextra")
 set(CMAKE_C_STANDARD 23)
 set(CMAKE_C_EXTENSIONS ON)
 
-set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -flto")
-set(CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_RELWITHDEBINFO} -flto")
-set(CMAKE_C_FLAGS_MINSIZEREL "${CMAKE_C_FLAGS_MINSIZEREL} -flto")
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Og")
 
 add_library(
@@ -46,6 +43,11 @@ target_include_directories(
     modlogc
     PUBLIC
         include   
+)
+target_link_libraries(
+    modlogc
+    PRIVATE
+        pthread
 )
 
 link_libraries(modlogc)

@@ -27,6 +27,8 @@ static FILE * dup_output(FILE *old_output) {
         return NULL;
     }
 
+    bool append = true;
+#ifdef __unix__
     int flags = fcntl(old_fd, F_GETFL);
     if(flags == -1) {
         return NULL;
@@ -38,12 +40,15 @@ static FILE * dup_output(FILE *old_output) {
         return NULL;
     }
 
+    append = (flags & O_APPEND);
+#endif
+
     int fd = dup(old_fd);
     if(fd == -1) {
         return NULL;
     }
 
-    FILE *output = fdopen(fd, flags & O_APPEND ? "a" : "w");
+    FILE *output = fdopen(fd, append ? "a" : "w");
     if(output == NULL) {
         int err = errno;
         close(fd);
@@ -76,11 +81,7 @@ logger_t log_create(FILE *output, unsigned int flags) {
         return NULL;
     }
 
-    errno = 0;
-    if(mtx_init(&logger->write_lock, mtx_plain) != thrd_success) {
-        if(errno == 0) {
-            errno = EAGAIN;
-        }
+    if(pthread_mutex_init(&logger->write_lock, NULL) != 0) {
         return NULL;
     }
 
@@ -103,7 +104,9 @@ int log_destroy(logger_t logger) {
         return -1;
     }
 
-    mtx_destroy(&logger->write_lock);
+    if(pthread_mutex_destroy(&logger->write_lock) != 0) {
+        return -1;
+    }
     free(logger);
     return 0;
 }

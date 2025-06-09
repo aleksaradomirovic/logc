@@ -18,7 +18,7 @@
 
 #include "modlogc.h"
 
-#include <threads.h>
+#include <pthread.h>
 
 #define LOG_LEVEL_DEFAULT_PLATFORM LOG_LEVEL_INFO
 
@@ -31,5 +31,5 @@ struct logger {
     FILE *output;
     log_header_t *header;
 
-    mtx_t write_lock;
+    pthread_mutex_t write_lock;
 };

@@ -86,22 +86,14 @@ int vlprintf(logger_t logger, log_level_t level, const char *format, va_list vli
         return 0;
     }
 
-    errno = 0;
-    if(mtx_lock(&logger->write_lock) != thrd_success) {
-        if(errno == 0) {
-            errno = EAGAIN;
-        }
+    if(pthread_mutex_lock(&logger->write_lock) != 0) {
         return -1;
     }
 
     int count = vlprintf_locked(logger, level, format, vlist);
     int err = errno;
 
-    errno = 0;
-    if(mtx_unlock(&logger->write_lock) != thrd_success) {
-        if(errno == 0) {
-            errno = EAGAIN;
-        }
+    if(pthread_mutex_unlock(&logger->write_lock) != 0) {
         return -1;
     }
 
