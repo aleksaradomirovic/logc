@@ -18,8 +18,10 @@
 #define _MODLOGC_H
 
 
+#include <errno.h>
 #include <stdarg.h>
 #include <stdio.h>
+#include <string.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -116,6 +118,7 @@ unsigned int log_get_level(logger_t logger);
  * @param ... format arguments
  * @return number of characters written to the log, or a negative value on error (errno set)
  */
+__attribute__((format (printf, 3, 4)))
 int lprintf(logger_t logger, log_level_t level, const char *format, ...);
 
 /**
@@ -167,6 +170,12 @@ extern logger_t stdlog;
  * @return 0 if successful or already open, -1 for error (errno set)
  */
 int init_stdlog();
+
+/**
+ * Shortcut macro for strerror(errno)
+ * @return result of strerror(errno)
+ */
+#define strerrno strerror(errno)
 
 
 #ifdef __cplusplus
